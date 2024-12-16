@@ -2,8 +2,12 @@ package org.example;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class Board {
+public class Board implements MouseListener, ActionListener {
 
     final Color BLACK = new Color(16, 134, 45);
     final Color WHITE = new Color(214, 206, 185);
@@ -13,6 +17,8 @@ public class Board {
     JLabel[][] cells; // this is the white and black cells in board
     JButton[][] blackPieces;
     JButton[][] whitePieces;
+
+    boolean pressed_piece = false;
 
     public Board(){
         JFrame frame = new JFrame("Chess");
@@ -32,7 +38,6 @@ public class Board {
     }
 
     private void setCells(){
-
         int colorIndex = 0;
 
         cells = new JLabel[8][8];
@@ -46,6 +51,8 @@ public class Board {
 
                 cells[i][j].setOpaque(true);
 
+                cells[i][j].addMouseListener(this);
+
                 boardPanel.add(cells[i][j]);
                 colorIndex++;
             }
@@ -54,7 +61,6 @@ public class Board {
     }
 
     private void setPieces(){
-        //--------------- set pieces
         blackPieces = new JButton[2][8];
         whitePieces = new JButton[2][8];
 
@@ -71,6 +77,9 @@ public class Board {
 
                 blackPieces[i][j].setBackground(cells[i][j].getBackground());
                 whitePieces[i][j].setBackground(cells[7 - i][j].getBackground());
+
+                blackPieces[i][j].addActionListener(this);
+                whitePieces[i][j].addActionListener(this);
 
                 cells[i][j].add(blackPieces[i][j]);
                 cells[7 - i][j].add(whitePieces[i][j]);
@@ -100,8 +109,57 @@ public class Board {
             blackPieces[i / 8][i % 8].setIcon(blackIcon);
             whitePieces[i / 8][i % 8].setIcon(whiteIcon);
         }
+    }
 
-        // set pieces ---------------
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if(pressed_piece){
+            for (int i = 0; i < cells.length; i++) {
+                for (int j = 0; j < cells[i].length; j++) {
+
+                    if(e.getSource() == cells[i][j]){
+                        pressed_piece = !pressed_piece;
+                        cells[i][j].setBackground(new Color(138, 21, 21));
+                    }
+
+                }
+            }
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(!pressed_piece){
+            for (int i = 0; i < blackPieces.length; i++) {
+                for (int j = 0; j < blackPieces[i].length; j++) {
+
+                    if(e.getSource() == blackPieces[i][j] || e.getSource() == whitePieces[i][j]){
+                        pressed_piece = !pressed_piece;
+                    }
+
+                }
+            }
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 
 }
