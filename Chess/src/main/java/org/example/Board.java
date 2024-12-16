@@ -31,6 +31,7 @@ public class Board implements MouseListener, ActionListener {
     boolean piecePressed = false;
     JButton buttonPressed = null;
     Position positionPressed = null;
+    boolean is_white = true;
 
     public Board(){
         JFrame frame = new JFrame("Chess");
@@ -140,9 +141,9 @@ public class Board implements MouseListener, ActionListener {
         for(int i = 0; i < cellPosition.length; i++){
             for (int j = 0; j < cellPosition[i].length; j++) {
                 cellPosition[i][j] = new Position(i + 1, j + 1);
+                cellMap.put(cells[i][j], cellPosition[i][j]);
             }
         }
-
     }
 
     private void matchPosition(){
@@ -150,11 +151,6 @@ public class Board implements MouseListener, ActionListener {
             for (int j = 0; j < blackPieces[i].length; j++) {
                 blackMap.put(blackPieces[i][j], blackPosition[i * 8 + j]);
                 whiteMap.put(whitePieces[i][j], whitePosition[i * 8 + j]);
-            }
-        }
-        for (int i = 0; i < cells.length; i++) {
-            for (int j = 0; j < cells[i].length; j++) {
-                cellMap.put(cells[i][j], cellPosition[i][j]);
             }
         }
     }
@@ -173,6 +169,17 @@ public class Board implements MouseListener, ActionListener {
                         cells[x][y].revalidate();
                         cells[x][y].repaint();
 
+                        buttonPressed.setBackground(cells[i][j].getBackground());
+                        cells[i][j].add(buttonPressed);
+                        cells[i][j].revalidate();
+                        cells[i][j].repaint();
+
+                        if(is_white){
+                            whiteMap.put(buttonPressed, cellMap.get(cells[i][j]));
+                        }else{
+                            blackMap.put(buttonPressed, cellMap.get(cells[i][j]));
+                        }
+
                         piecePressed = !piecePressed;
                     }
                 }
@@ -189,12 +196,12 @@ public class Board implements MouseListener, ActionListener {
                     if(e.getSource() == blackPieces[i][j]){
                         buttonPressed = blackPieces[i][j];
                         positionPressed = blackMap.get(buttonPressed);
-
+                        is_white = false;
                         piecePressed = !piecePressed;
                     }else if(e.getSource() == whitePieces[i][j]){
                         buttonPressed = whitePieces[i][j];
                         positionPressed = whiteMap.get(buttonPressed);
-
+                        is_white = true;
                         piecePressed = !piecePressed;
                     }
 
