@@ -22,8 +22,11 @@ public class Board implements MouseListener, ActionListener {
     Position[] blackPosition;
     Position[] whitePosition;
 
+    Position[][] cellPosition;
+
     HashMap<JButton, Position> whiteMap = new HashMap<>();
     HashMap<JButton, Position> blackMap = new HashMap<>();
+    HashMap<JLabel, Position> cellMap = new HashMap<>();
 
     boolean piecePressed = false;
     JButton buttonPressed = null;
@@ -126,6 +129,7 @@ public class Board implements MouseListener, ActionListener {
     private void setPosition(){
         blackPosition = new Position[16];
         whitePosition = new Position[16];
+        cellPosition = new Position[8][8];
 
         for (int i = 0; i < blackPieces.length; i++) {
             for (int j = 0; j < blackPieces[i].length; j++) {
@@ -133,6 +137,12 @@ public class Board implements MouseListener, ActionListener {
                 whitePosition[i * 8 + j] = new Position(8 - i, j + 1);
             }
         }
+        for(int i = 0; i < cellPosition.length; i++){
+            for (int j = 0; j < cellPosition[i].length; j++) {
+                cellPosition[i][j] = new Position(i + 1, j + 1);
+            }
+        }
+
     }
 
     private void matchPosition(){
@@ -140,6 +150,11 @@ public class Board implements MouseListener, ActionListener {
             for (int j = 0; j < blackPieces[i].length; j++) {
                 blackMap.put(blackPieces[i][j], blackPosition[i * 8 + j]);
                 whiteMap.put(whitePieces[i][j], whitePosition[i * 8 + j]);
+            }
+        }
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[i].length; j++) {
+                cellMap.put(cells[i][j], cellPosition[i][j]);
             }
         }
     }
@@ -188,11 +203,6 @@ public class Board implements MouseListener, ActionListener {
         }
     }
 
-
-
-
-
-    
     
     @Override
     public void mousePressed(MouseEvent e) {
