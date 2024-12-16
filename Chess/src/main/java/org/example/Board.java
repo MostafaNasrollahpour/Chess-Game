@@ -22,6 +22,9 @@ public class Board implements MouseListener, ActionListener {
     Position[] blackPosition;
     Position[] whitePosition;
 
+    HashMap<JButton, Position> whiteMap = new HashMap<>();
+    HashMap<JButton, Position> blackMap = new HashMap<>();
+
     boolean pressedPiece = false;
     JButton pressedButton = null;
 
@@ -39,7 +42,7 @@ public class Board implements MouseListener, ActionListener {
         setCells();
         setPieces();
         setPosition();
-
+        matchPosition();
 
 
         frame.add(boardPanel);
@@ -132,6 +135,15 @@ public class Board implements MouseListener, ActionListener {
         }
     }
 
+    private void matchPosition(){
+        for (int i = 0; i < blackPieces.length; i++) {
+            for (int j = 0; j < blackPieces[i].length; j++) {
+                blackMap.put(blackPieces[i][j], blackPosition[i * 8 + j]);
+                whiteMap.put(blackPieces[i][j], whitePosition[i * 8 + j]);
+            }
+        }
+    }
+
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -200,6 +212,11 @@ public class Board implements MouseListener, ActionListener {
         public Position(int x, int y){
             this.x = x;
             this.y = y;
+        }
+
+        @Override
+        public String toString(){
+            return "(" + x + ", " + y + ")";
         }
     }
 
