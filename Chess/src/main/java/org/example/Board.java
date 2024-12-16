@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.HashMap;
 
 public class Board implements MouseListener, ActionListener {
 
@@ -18,7 +19,12 @@ public class Board implements MouseListener, ActionListener {
     JButton[][] blackPieces;
     JButton[][] whitePieces;
 
-    boolean pressed_piece = false;
+    Position[] blackPosition;
+    Position[] whitePosition;
+
+    boolean pressedPiece = false;
+    JButton pressedButton = null;
+
 
     public Board(){
         JFrame frame = new JFrame("Chess");
@@ -32,6 +38,9 @@ public class Board implements MouseListener, ActionListener {
 
         setCells();
         setPieces();
+        setPosition();
+
+
 
         frame.add(boardPanel);
         frame.setVisible(true);
@@ -111,15 +120,28 @@ public class Board implements MouseListener, ActionListener {
         }
     }
 
+    private void setPosition(){
+        blackPosition = new Position[16];
+        whitePosition = new Position[16];
+
+        for (int i = 0; i < blackPieces.length; i++) {
+            for (int j = 0; j < blackPieces[i].length; j++) {
+                blackPosition[i * 8 + j] = new Position(i + 1, j + 1);
+                whitePosition[i * 8 + j] = new Position(8 - i, j + 1);
+            }
+        }
+    }
+
+
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(pressed_piece){
+        if(pressedPiece){
             for (int i = 0; i < cells.length; i++) {
                 for (int j = 0; j < cells[i].length; j++) {
 
                     if(e.getSource() == cells[i][j]){
-                        pressed_piece = !pressed_piece;
-                        cells[i][j].setBackground(new Color(138, 21, 21));
+                        cells[i][j].add(pressedButton);
+                        pressedPiece = !pressedPiece;
                     }
 
                 }
@@ -129,12 +151,16 @@ public class Board implements MouseListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(!pressed_piece){
+        if(!pressedPiece){
             for (int i = 0; i < blackPieces.length; i++) {
                 for (int j = 0; j < blackPieces[i].length; j++) {
 
-                    if(e.getSource() == blackPieces[i][j] || e.getSource() == whitePieces[i][j]){
-                        pressed_piece = !pressed_piece;
+                    if(e.getSource() == blackPieces[i][j]){
+                        pressedButton = blackPieces[i][j];
+                        pressedPiece = !pressedPiece;
+                    }else if(e.getSource() == whitePieces[i][j]){
+                        pressedButton = whitePieces[i][j];
+                        pressedPiece = !pressedPiece;
                     }
 
                 }
@@ -142,6 +168,12 @@ public class Board implements MouseListener, ActionListener {
         }
     }
 
+
+
+
+
+    
+    
     @Override
     public void mousePressed(MouseEvent e) {
 
@@ -160,6 +192,15 @@ public class Board implements MouseListener, ActionListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    private static class Position {
+        int x;
+        int y;
+        public Position(int x, int y){
+            this.x = x;
+            this.y = y;
+        }
     }
 
 }
