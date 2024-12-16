@@ -25,9 +25,9 @@ public class Board implements MouseListener, ActionListener {
     HashMap<JButton, Position> whiteMap = new HashMap<>();
     HashMap<JButton, Position> blackMap = new HashMap<>();
 
-    boolean pressedPiece = false;
-    JButton pressedButton = null;
-
+    boolean piecePressed = false;
+    JButton buttonPressed = null;
+    Position positionPressed = null;
 
     public Board(){
         JFrame frame = new JFrame("Chess");
@@ -139,7 +139,7 @@ public class Board implements MouseListener, ActionListener {
         for (int i = 0; i < blackPieces.length; i++) {
             for (int j = 0; j < blackPieces[i].length; j++) {
                 blackMap.put(blackPieces[i][j], blackPosition[i * 8 + j]);
-                whiteMap.put(blackPieces[i][j], whitePosition[i * 8 + j]);
+                whiteMap.put(whitePieces[i][j], whitePosition[i * 8 + j]);
             }
         }
     }
@@ -147,15 +147,19 @@ public class Board implements MouseListener, ActionListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(pressedPiece){
+        if(piecePressed){
             for (int i = 0; i < cells.length; i++) {
                 for (int j = 0; j < cells[i].length; j++) {
-
                     if(e.getSource() == cells[i][j]){
-                        cells[i][j].add(pressedButton);
-                        pressedPiece = !pressedPiece;
-                    }
+                        int x = positionPressed.x - 1;
+                        int y = positionPressed.y - 1;
 
+                        cells[x][y].remove(buttonPressed);
+                        cells[x][y].revalidate();
+                        cells[x][y].repaint();
+
+                        piecePressed = !piecePressed;
+                    }
                 }
             }
         }
@@ -163,16 +167,20 @@ public class Board implements MouseListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(!pressedPiece){
+        if(!piecePressed){
             for (int i = 0; i < blackPieces.length; i++) {
                 for (int j = 0; j < blackPieces[i].length; j++) {
 
                     if(e.getSource() == blackPieces[i][j]){
-                        pressedButton = blackPieces[i][j];
-                        pressedPiece = !pressedPiece;
+                        buttonPressed = blackPieces[i][j];
+                        positionPressed = blackMap.get(buttonPressed);
+
+                        piecePressed = !piecePressed;
                     }else if(e.getSource() == whitePieces[i][j]){
-                        pressedButton = whitePieces[i][j];
-                        pressedPiece = !pressedPiece;
+                        buttonPressed = whitePieces[i][j];
+                        positionPressed = whiteMap.get(buttonPressed);
+
+                        piecePressed = !piecePressed;
                     }
 
                 }
