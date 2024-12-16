@@ -102,11 +102,11 @@ public class Board implements MouseListener, ActionListener {
             }
         }
 
-        ImageIcon blackIcon = null;
-        Image blackTemp = null;
+        ImageIcon blackIcon;
+        Image blackTemp;
 
-        ImageIcon whiteIcon = null;
-        Image whiteTemp = null;
+        ImageIcon whiteIcon;
+        Image whiteTemp;
 
         for (int i = 0; i < 16; i++) {
             if(i < 8){
@@ -158,10 +158,10 @@ public class Board implements MouseListener, ActionListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(piecePressed){
-            for (int i = 0; i < cells.length; i++) {
-                for (int j = 0; j < cells[i].length; j++) {
-                    if(e.getSource() == cells[i][j]){
+        if(piecePressed)
+            for (JLabel[] cell : cells)
+                for (JLabel jLabel : cell)
+                    if (e.getSource() == jLabel) {
                         int x = positionPressed.x - 1;
                         int y = positionPressed.y - 1;
 
@@ -169,22 +169,19 @@ public class Board implements MouseListener, ActionListener {
                         cells[x][y].revalidate();
                         cells[x][y].repaint();
 
-                        buttonPressed.setBackground(cells[i][j].getBackground());
-                        cells[i][j].add(buttonPressed);
-                        cells[i][j].revalidate();
-                        cells[i][j].repaint();
+                        buttonPressed.setBackground(jLabel.getBackground());
+                        jLabel.add(buttonPressed);
+                        jLabel.revalidate();
+                        jLabel.repaint();
 
-                        if(is_white){
-                            whiteMap.put(buttonPressed, cellMap.get(cells[i][j]));
-                        }else{
-                            blackMap.put(buttonPressed, cellMap.get(cells[i][j]));
+                        if (is_white) {
+                            whiteMap.put(buttonPressed, cellMap.get(jLabel));
+                        } else {
+                            blackMap.put(buttonPressed, cellMap.get(jLabel));
                         }
 
                         piecePressed = !piecePressed;
                     }
-                }
-            }
-        }
     }
 
     @Override
