@@ -19,18 +19,20 @@ public class Board {
         
         int colorIndex = 0;
 
-        JLabel[] Cells = new JLabel[64];
-        for (int i = 0; i < Cells.length; i++) {
-            Cells[i] = new JLabel();
-            if(colorIndex % 2 == 0){
-                Cells[i].setBackground(WHITE);
-            }else{
-                Cells[i].setBackground(BLACK);
-            }
-            if((i + 1) % 8 != 0)
+        JLabel[][] cells = new JLabel[8][8];
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[i].length; j++) {
+                cells[i][j] = new JLabel();
+                if (colorIndex % 2 == 0)
+                    cells[i][j].setBackground(WHITE);
+                else
+                    cells[i][j].setBackground(BLACK);
+
                 colorIndex++;
-            Cells[i].setOpaque(true);
-            boardPanel.add(Cells[i]);
+                cells[i][j].setOpaque(true);
+                boardPanel.add(cells[i][j]);
+            }
+            colorIndex++;
         }
 
         frame.add(boardPanel);
