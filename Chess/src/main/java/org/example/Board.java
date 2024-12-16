@@ -38,26 +38,20 @@ public class Board {
             colorIndex++;
         }
 
-        ImageIcon blackIcon = new ImageIcon("img/black/BLACK KING .png");
-        Image blackTemp = blackIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-        blackIcon = new ImageIcon(blackTemp);
-
-        ImageIcon whiteIcon = new ImageIcon("img/white/WHITE KING .png");
-        Image whiteTemp = whiteIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-        whiteIcon = new ImageIcon(whiteTemp);
-
+        //--------------- set pieces
         JButton[][] blackPieces = new JButton[2][8];
         JButton[][] whitePieces = new JButton[2][8];
+
         for (int i = 0; i < blackPieces.length; i++) {
             for (int j = 0; j < blackPieces[i].length; j++) {
-                blackPieces[i][j] = new JButton(blackIcon);
-                whitePieces[i][j] = new JButton(whiteIcon);
+                blackPieces[i][j] = new JButton();
+                whitePieces[i][j] = new JButton();
 
                 blackPieces[i][j].setFocusable(false);
-                blackPieces[i][j].setFocusable(false);
+                whitePieces[i][j].setFocusable(false);
 
-                blackPieces[i][j].setSize(100,100);
-                whitePieces[i][j].setSize(100,100);
+                blackPieces[i][j].setSize(100, 100);
+                whitePieces[i][j].setSize(100, 100);
 
                 blackPieces[i][j].setBackground(cells[i][j].getBackground());
                 whitePieces[i][j].setBackground(cells[7 - i][j].getBackground());
@@ -66,6 +60,32 @@ public class Board {
                 cells[7 - i][j].add(whitePieces[i][j]);
             }
         }
+
+        ImageIcon blackIcon = null;
+        Image blackTemp = null;
+
+        ImageIcon whiteIcon = null;
+        Image whiteTemp = null;
+
+        for (int i = 0; i < 16; i++) {
+            if(i < 8){
+                blackIcon = new ImageIcon("img/black/" + (i + 1) + ".png");
+                whiteIcon = new ImageIcon("img/white/" + (i + 1) + ".png");
+            }else{
+                blackIcon = new ImageIcon("img/black/10.png");
+                whiteIcon = new ImageIcon("img/white/10.png");
+            }
+            blackTemp = blackIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+            whiteTemp = whiteIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+
+            blackIcon = new ImageIcon(blackTemp);
+            whiteIcon = new ImageIcon(whiteTemp);
+
+            blackPieces[i / 8][i % 8].setIcon(blackIcon);
+            whitePieces[i / 8][i % 8].setIcon(whiteIcon);
+        }
+
+        // set pieces ---------------
 
         frame.add(boardPanel);
         frame.setVisible(true);
