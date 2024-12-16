@@ -8,9 +8,11 @@ public class Board {
     final Color BLACK = new Color(16, 134, 45);
     final Color WHITE = new Color(214, 206, 185);
     final Color INVISIBLE = new Color(0,0,0,0);
+    final Image MAIN_ICON = new ImageIcon("img/icon.png").getImage();
 
     public Board(){
         JFrame frame = new JFrame("Chess");
+        frame.setIconImage(MAIN_ICON);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setBounds(400, 150, 800, 800);
 
