@@ -2,6 +2,8 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Board {
 
@@ -19,12 +21,14 @@ public class Board {
     Piece[] blackChessMan;
 
     Handler handler = new Handler();
+    ArrayList<Cell> emptyCells;
 
     public Board(){
         initFrame();
         initBoard();
         initPawns();
         initChessMan();
+        initEmptyCell();
         enablePieces();
 
         frame.repaint();
@@ -108,8 +112,15 @@ public class Board {
 
     }
 
+    public void initEmptyCell(){
+        emptyCells = new ArrayList<>();
+        for (int i = 2; i < cells.length - 2; i++) {
+            emptyCells.addAll(Arrays.asList(cells[i]));
+        }
+    }
+
     public void enablePieces(){
-        Handler.setComponents(cells, frame);
+        Handler.setComponents(cells, emptyCells, frame);
 
         for(var piece: whiteChessMan)
             new Handler(piece);

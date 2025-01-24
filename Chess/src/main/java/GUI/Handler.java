@@ -3,10 +3,12 @@ package GUI;
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 public class Handler implements MouseListener {
 
     private static Cell[][] cells;
+    private static ArrayList<Cell> emptyCells;
     private static boolean pressed = false;
     private static Piece piecePressed;
     private static JFrame frame;
@@ -33,9 +35,10 @@ public class Handler implements MouseListener {
 
     }
 
-    public static void setComponents(Cell[][] x, JFrame y){
+    public static void setComponents(Cell[][] x,ArrayList<Cell> y, JFrame z){
         cells = x;
-        frame = y;
+        emptyCells = y;
+        frame = z;
     }
 
     @Override
@@ -47,7 +50,7 @@ public class Handler implements MouseListener {
             int x = piecePressed.position.getX();
             int y = piecePressed.position.getY();
             cells[x][y].remove(piecePressed);
-
+            emptyCells.add(cells[y][x]);
 
             x = cell.position.getX();
             y = cell.position.getY();
@@ -55,8 +58,12 @@ public class Handler implements MouseListener {
             piecePressed.setBackground(cells[y][x].getBackground());
             piecePressed.updatePosition(x, y);
             cells[y][x].add(piecePressed);
+            emptyCells.remove(cells[y][x]);
 
             frame.repaint();
+            for(var dklj: emptyCells){
+                System.out.println(dklj.position);
+            }
         }
     }
 
