@@ -18,7 +18,7 @@ public class Board {
     Piece[] whiteChessMan;
     Piece[] blackChessMan;
 
-    MouseHandler mouseHandler = new MouseHandler();
+    Handler handler = new Handler();
 
     public Board(){
         initFrame();
@@ -53,11 +53,11 @@ public class Board {
             for (int j = 0; j < cells[i].length; j++) {
 
                 if (colorIndex % 2 == 0)
-                    cells[i][j] = new Cell(WHITE, i, j);
+                    cells[i][j] = new Cell(WHITE, j, i);
                 else
-                    cells[i][j] = new Cell(BLACK, i, j);
+                    cells[i][j] = new Cell(BLACK, j, i);
 
-                cells[i][j].addMouseListener(mouseHandler);
+                cells[i][j].addMouseListener(handler);
 
                 boardPanel.add(cells[i][j]);
                 colorIndex++;
@@ -72,11 +72,11 @@ public class Board {
         blackPawn = new Piece[8];
 
         for (int i = 0; i < whitePawn.length; i+=2) {
-            whitePawn[i] = new Piece(WHITE, "white", 10, 6, i);
-            whitePawn[i + 1] = new Piece(BLACK, "white", 10, 6, i + 1);
+            whitePawn[i] = new Piece(WHITE, "white", 10, i, 6);
+            whitePawn[i + 1] = new Piece(BLACK, "white", 10,  i + 1, 6);
 
-            blackPawn[i] = new Piece(BLACK, "black", 10, 1, i);
-            blackPawn[i + 1] = new Piece(WHITE, "black", 10, 1, i + 1);
+            blackPawn[i] = new Piece(BLACK, "black", 10, i, 1);
+            blackPawn[i + 1] = new Piece(WHITE, "black", 10, i + 1, 1);
 
             cells[1][i].add(blackPawn[i]);
             cells[1][i + 1].add(blackPawn[i + 1]);
@@ -92,11 +92,11 @@ public class Board {
         blackChessMan = new Piece[8];
 
         for (int i = 0; i < whiteChessMan.length; i+=2) {
-            whiteChessMan[i] = new Piece(BLACK, "white", i + 1, 7, i);
-            whiteChessMan[i + 1] = new Piece(WHITE, "white", i + 2, 7, i + 1);
+            whiteChessMan[i] = new Piece(BLACK, "white", i + 1, i, 7);
+            whiteChessMan[i + 1] = new Piece(WHITE, "white", i + 2, i + 1, 7);
 
-            blackChessMan[i] = new Piece(WHITE, "black", i + 1, 0, i);
-            blackChessMan[i + 1] = new Piece(BLACK, "black", i + 2, 0, i + 1);
+            blackChessMan[i] = new Piece(WHITE, "black", i + 1, i, 0);
+            blackChessMan[i + 1] = new Piece(BLACK, "black", i + 2, i + 1, 0);
 
             cells[0][i].add(blackChessMan[i]);
             cells[0][i + 1].add(blackChessMan[i + 1]);
@@ -109,19 +109,19 @@ public class Board {
     }
 
     public void enablePieces(){
-        PieceHandler.setCells(cells);
+        Handler.setCells(cells);
 
         for(var piece: whiteChessMan)
-            new PieceHandler(piece);
+            new Handler(piece);
 
         for(var piece: whitePawn)
-            new PieceHandler(piece);
+            new Handler(piece);
 
         for(var piece: blackChessMan)
-            new PieceHandler(piece);
+            new Handler(piece);
 
         for(var piece: blackPawn)
-            new PieceHandler(piece);
+            new Handler(piece);
 
     }
 
