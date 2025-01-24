@@ -8,16 +8,22 @@ public class Board {
     JFrame frame;
     JPanel boardPanel;
     JLabel[][] cells; // all white & black cells in board
+
     private final Color BLACK = new Color(16, 134, 45);
     private final Color WHITE = new Color(214, 206, 185);
 
     Piece[] whitePawn;
     Piece[] blackPawn;
 
+    Piece[] whiteChessMan;
+    Piece[] blackChessMan;
+
     public Board(){
         initFrame();
         initBoard();
         initPawns();
+        initChessMan();
+
         frame.repaint();
     }
 
@@ -75,10 +81,28 @@ public class Board {
             cells[6][i + 1].add(whitePawn[i + 1]);
         }
 
-
-
     }
 
+    public void initChessMan(){
+        whiteChessMan = new Piece[8];
+        blackChessMan = new Piece[8];
+
+        for (int i = 0; i < whiteChessMan.length; i+=2) {
+            whiteChessMan[i] = new Piece(BLACK, "white", i + 1);
+            whiteChessMan[i + 1] = new Piece(WHITE, "white", i + 2);
+
+            blackChessMan[i] = new Piece(WHITE, "black", i + 1);
+            blackChessMan[i + 1] = new Piece(BLACK, "black", i + 2);
+
+            cells[0][i].add(blackChessMan[i]);
+            cells[0][i + 1].add(blackChessMan[i + 1]);
+
+            cells[7][i].add(whiteChessMan[i]);
+            cells[7][i + 1].add(whiteChessMan[i + 1]);
+
+        }
+
+    }
 
     public static void main(String[] args) {
         new Board();
