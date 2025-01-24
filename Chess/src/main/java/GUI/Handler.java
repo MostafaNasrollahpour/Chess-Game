@@ -10,6 +10,7 @@ public class Handler implements MouseListener {
     private static boolean pressed = false;
     private static Piece piecePressed;
     private static JFrame frame;
+    private static boolean isWhiteTurn = true;
 
     public Handler(){
 
@@ -18,8 +19,15 @@ public class Handler implements MouseListener {
 
         piece.addActionListener(actionEvent -> {
             if (!pressed){
-                pressed = true;
-                piecePressed = piece;
+                if(isWhiteTurn && piece.isWhite){
+                    piecePressed = piece;
+                    pressed = true;
+                    isWhiteTurn = false;
+                }else if(!isWhiteTurn && !piece.isWhite){
+                    piecePressed = piece;
+                    pressed = true;
+                    isWhiteTurn = true;
+                }
             }
         });
 
