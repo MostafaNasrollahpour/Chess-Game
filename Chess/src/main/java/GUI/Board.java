@@ -25,6 +25,7 @@ public class Board {
         initChessMan();
 
         frame.repaint();
+
     }
 
     public void initFrame(){
@@ -49,9 +50,9 @@ public class Board {
             for (int j = 0; j < cells[i].length; j++) {
 
                 if (colorIndex % 2 == 0)
-                    cells[i][j] = new Cell(WHITE);
+                    cells[i][j] = new Cell(WHITE, i, j);
                 else
-                    cells[i][j] = new Cell(BLACK);
+                    cells[i][j] = new Cell(BLACK, i, j);
 
                 boardPanel.add(cells[i][j]);
                 colorIndex++;
@@ -66,11 +67,11 @@ public class Board {
         blackPawn = new Piece[8];
 
         for (int i = 0; i < whitePawn.length; i+=2) {
-            whitePawn[i] = new Piece(WHITE, "white", 10);
-            whitePawn[i + 1] = new Piece(BLACK, "white", 10);
+            whitePawn[i] = new Piece(WHITE, "white", 10, 6, i);
+            whitePawn[i + 1] = new Piece(BLACK, "white", 10, 6, i + 1);
 
-            blackPawn[i] = new Piece(BLACK, "black", 10);
-            blackPawn[i + 1] = new Piece(WHITE, "black", 10);
+            blackPawn[i] = new Piece(BLACK, "black", 10, 1, i);
+            blackPawn[i + 1] = new Piece(WHITE, "black", 10, 1, i + 1);
 
             cells[1][i].add(blackPawn[i]);
             cells[1][i + 1].add(blackPawn[i + 1]);
@@ -86,11 +87,11 @@ public class Board {
         blackChessMan = new Piece[8];
 
         for (int i = 0; i < whiteChessMan.length; i+=2) {
-            whiteChessMan[i] = new Piece(BLACK, "white", i + 1);
-            whiteChessMan[i + 1] = new Piece(WHITE, "white", i + 2);
+            whiteChessMan[i] = new Piece(BLACK, "white", i + 1, 7, i);
+            whiteChessMan[i + 1] = new Piece(WHITE, "white", i + 2, 7, i + 1);
 
-            blackChessMan[i] = new Piece(WHITE, "black", i + 1);
-            blackChessMan[i + 1] = new Piece(BLACK, "black", i + 2);
+            blackChessMan[i] = new Piece(WHITE, "black", i + 1, 0, i);
+            blackChessMan[i + 1] = new Piece(BLACK, "black", i + 2, 0, i + 1);
 
             cells[0][i].add(blackChessMan[i]);
             cells[0][i + 1].add(blackChessMan[i + 1]);

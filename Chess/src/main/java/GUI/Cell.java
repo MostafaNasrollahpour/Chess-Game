@@ -5,9 +5,12 @@ import java.awt.*;
 
 public class Cell extends JLabel {
 
-    public Cell(Color color){
+    Position position;
+
+    public Cell(Color color, int x, int y){
         this.setBackground(color);
         this.setOpaque(true);
+        position = new Position(x, y);
     }
 
     private static class Position{
