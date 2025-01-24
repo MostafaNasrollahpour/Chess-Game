@@ -25,6 +25,7 @@ public class Board {
         initBoard();
         initPawns();
         initChessMan();
+        enablePieces();
 
         frame.repaint();
 
@@ -107,4 +108,24 @@ public class Board {
 
     }
 
+    public void enablePieces(){
+        PieceHandler.setCells(cells);
+
+        for(var piece: whiteChessMan)
+            new PieceHandler(piece);
+
+        for(var piece: whitePawn)
+            new PieceHandler(piece);
+
+        for(var piece: blackChessMan)
+            new PieceHandler(piece);
+
+        for(var piece: blackPawn)
+            new PieceHandler(piece);
+
+    }
+
+    public static void main(String[] args) {
+        new Board();
+    }
 }
