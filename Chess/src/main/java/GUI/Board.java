@@ -18,6 +18,8 @@ public class Board {
     Piece[] whiteChessMan;
     Piece[] blackChessMan;
 
+    MouseHandler mouseHandler = new MouseHandler();
+
     public Board(){
         initFrame();
         initBoard();
@@ -53,6 +55,8 @@ public class Board {
                     cells[i][j] = new Cell(WHITE, i, j);
                 else
                     cells[i][j] = new Cell(BLACK, i, j);
+
+                cells[i][j].addMouseListener(mouseHandler);
 
                 boardPanel.add(cells[i][j]);
                 colorIndex++;
@@ -103,7 +107,4 @@ public class Board {
 
     }
 
-    public static void main(String[] args) {
-        new Board();
-    }
 }
