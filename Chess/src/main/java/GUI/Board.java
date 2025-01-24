@@ -33,7 +33,7 @@ public class Board {
 
     public void initFrame(){
         frame = new JFrame("Chess");
-        frame.setBounds(100, 100, 800, 800);
+        frame.setBounds(1000, 100, 800, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         var icon = new ImageIcon("img/icon.png").getImage();
@@ -109,7 +109,7 @@ public class Board {
     }
 
     public void enablePieces(){
-        Handler.setCells(cells);
+        Handler.setComponents(cells, frame);
 
         for(var piece: whiteChessMan)
             new Handler(piece);
