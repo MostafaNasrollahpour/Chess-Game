@@ -7,7 +7,7 @@ public class Board {
 
     JFrame frame;
     JPanel boardPanel;
-    JLabel[][] cells; // all white & black cells in board
+    Cell[][] cells; // all white & black cells in board
 
     private final Color BLACK = new Color(16, 134, 45);
     private final Color WHITE = new Color(214, 206, 185);
@@ -41,20 +41,18 @@ public class Board {
     public void initBoard(){
         boardPanel = new JPanel();
         boardPanel.setLayout(new GridLayout(8, 8));
-        cells = new JLabel[8][8];
+        cells = new Cell[8][8];
 
         int colorIndex = 0;
 
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
-                cells[i][j] = new JLabel();
 
                 if (colorIndex % 2 == 0)
-                    cells[i][j].setBackground(WHITE);
+                    cells[i][j] = new Cell(WHITE);
                 else
-                    cells[i][j].setBackground(BLACK);
+                    cells[i][j] = new Cell(BLACK);
 
-                cells[i][j].setOpaque(true);
                 boardPanel.add(cells[i][j]);
                 colorIndex++;
             }

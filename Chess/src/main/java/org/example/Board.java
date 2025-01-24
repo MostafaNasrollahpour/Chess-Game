@@ -138,6 +138,7 @@ public class Board implements MouseListener, ActionListener {
                 whitePosition[i * 8 + j] = new Position(8 - i, j + 1);
             }
         }
+
         for(int i = 0; i < cellPosition.length; i++){
             for (int j = 0; j < cellPosition[i].length; j++) {
                 cellPosition[i][j] = new Position(i + 1, j + 1);
