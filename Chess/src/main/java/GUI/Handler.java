@@ -53,8 +53,8 @@ public class Handler implements MouseListener {
             y = cell.position.getY();
 
             piecePressed.setBackground(cells[y][x].getBackground());
+            piecePressed.updatePosition(x, y);
             cells[y][x].add(piecePressed);
-
 
             frame.repaint();
         }
